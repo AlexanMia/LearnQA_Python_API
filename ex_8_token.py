@@ -26,4 +26,5 @@ time.sleep(20)
 # отправка запроса с токеном после готовности задачи и проверка поля result
 response_after_waiting = requests.get(url, params=token)
 print(response_after_waiting.json())
+assert response_after_waiting.json().get('status') == 'Job is ready', "Fields values don't matched"
 assert 'result' in response_after_waiting.json(), "Key result is not present"
