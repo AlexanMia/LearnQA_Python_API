@@ -32,3 +32,22 @@ class TestUserGet(BaseCase):
 
         expected_fields = ["username", "email", "firstName", "lastName"]
         Assertions.assert_json_has_keys(response2, expected_fields)
+
+    # В этой задаче нужно написать тест, который авторизовывается одним пользователем,
+    # но получает данные другого (т.е. с другим ID).
+    # И убедиться, что в этом случае запрос также получает только username,
+    # так как мы не должны видеть остальные данные чужого пользователя.
+    def test_get_user_details_auth_as_another_user(self):
+        data = {
+            'email': 'vinkotov@example.com',
+            'password': '1234'
+        }
+
+        MyRequests.post("/user/login", data=data)
+
+        response2 = MyRequests.get("/user/1")
+
+        Assertions.assert_json_has_key(response2, "username")
+        Assertions.assert_json_has_not_key(response2, "email")
+        Assertions.assert_json_has_not_key(response2, "firstName")
+        Assertions.assert_json_has_not_key(response2, "lastName")
