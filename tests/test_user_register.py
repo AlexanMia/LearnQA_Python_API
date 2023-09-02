@@ -83,7 +83,7 @@ class TestUserRegister(BaseCase):
         """
         Создание пользователя с очень длинным именем - длиннее 250 символов
         """
-        email = 'vinkin@example.com'
+        email = 'vinkif@example.com'
         data = self.prepare_registration_data(email)
         data["firstName"] = ('eodswbwnryvrtzknqcdzyhcbyhhadpvzptqtbhrfvkcoooknvyrgzavxapczvipkchtrbuqpctjycjvpozj'
                              'grtojabwsfzztlkqwixpxcwjrhefuhmkvpalugjusyaucefrozuqpwpemzorsdwvaszamjwcrhdvkkjbxya'
