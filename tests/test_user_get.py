@@ -1,11 +1,14 @@
-
+import allure
 
 from lib.assertions import Assertions
 from lib.base_case import BaseCase
 from lib.my_requests import MyRequests
 
 
+@allure.suite("Tests get users details module")
+@allure.feature('Tests get details of user')
 class TestUserGet(BaseCase):
+    @allure.title("Get user details without auth - negative")
     def test_get_user_details_not_auth(self):
         response = MyRequests.get("/user/2")
 
@@ -14,6 +17,7 @@ class TestUserGet(BaseCase):
         Assertions.assert_json_has_not_key(response, "firstName")
         Assertions.assert_json_has_not_key(response, "lastName")
 
+    @allure.title("Get user details bu auth as same user - positive")
     def test_get_user_details_auth_as_same_user(self):
         data = {
             'email': 'vinkotov@example.com',
@@ -37,6 +41,7 @@ class TestUserGet(BaseCase):
     # но получает данные другого (т.е. с другим ID).
     # И убедиться, что в этом случае запрос также получает только username,
     # так как мы не должны видеть остальные данные чужого пользователя.
+    @allure.title("Get user details bu auth as another user - negative")
     def test_get_user_details_auth_as_another_user(self):
         data = {
             'email': 'vinkotov@example.com',

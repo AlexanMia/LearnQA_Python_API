@@ -1,8 +1,12 @@
+import allure
+
 from lib.assertions import Assertions
 from lib.base_case import BaseCase
 from lib.my_requests import MyRequests
 
 
+@allure.suite("Tests delete users module")
+@allure.feature('Tests deleting users')
 class TestUserDelete(BaseCase):
     """
     У нас есть метод, который удаляет пользователя по ID - DELETE-метод https://playground.learnqa.ru/api/user/{id}
@@ -20,6 +24,7 @@ class TestUserDelete(BaseCase):
     Третий - негативный, попробовать удалить пользователя, будучи авторизованными другим пользователем.
     """
 
+    @allure.title("Delete user by forbidden id - negative")
     def test_delete_user_by_id_2(self):
         """
         Первый - на попытку удалить пользователя по ID 2. Его данные для авторизации:
@@ -51,6 +56,7 @@ class TestUserDelete(BaseCase):
         assert response3.content.decode("utf-8") == f"Please, do not delete test users with ID 1, 2, 3, 4 or 5.", \
             f"Unexpected response content {response3.content}"
 
+    @allure.title("Delete just created user - positive")
     def test_delete_just_created_user(self):
         """
         Второй - позитивный. Создать пользователя, авторизоваться из-под него, удалить,
@@ -100,6 +106,7 @@ class TestUserDelete(BaseCase):
         assert response4.content.decode("utf-8") == f"User not found", \
             f"Unexpected response content {response4.content}"
 
+    @allure.title("Delete user by auth another user - negative")
     def test_delete_user_by_auth_another_user(self):
         """
         Третий - негативный, попробовать удалить пользователя, будучи авторизованными другим пользователем.

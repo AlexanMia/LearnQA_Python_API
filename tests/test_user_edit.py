@@ -1,9 +1,15 @@
+import allure
+
 from lib.assertions import Assertions
 from lib.base_case import BaseCase
 from lib.my_requests import MyRequests
 
 
+@allure.suite("Tests user edit module")
+@allure.feature('Tests edit of user')
 class TestUserEdit(BaseCase):
+
+    @allure.title("Edit just created user - positive")
     def test_edit_just_created_user(self):
         # REGISTER
         register_data = self.prepare_registration_data()
@@ -64,6 +70,7 @@ class TestUserEdit(BaseCase):
     # - Попытаемся изменить firstName пользователя, будучи авторизованными тем же пользователем,
     # на очень короткое значение в один символ
 
+    @allure.title("Edit user without authorization - negative")
     def test_edit_user_without_auth(self):
         """
         Изменить данные пользователя, будучи неавторизованными
@@ -88,6 +95,7 @@ class TestUserEdit(BaseCase):
 
         Assertions.assert_code_status(response2, 400)
 
+    @allure.title("Edit user by auth another user - negative")
     def test_edit_user_by_auth_another_user(self):
         """
         Изменить данные пользователя, будучи авторизованными другим пользователем
@@ -125,6 +133,7 @@ class TestUserEdit(BaseCase):
 
         Assertions.assert_code_status(response3, 400)
 
+    @allure.title("Edit email to invalid - negative")
     def test_edit_invalid_email_user(self):
         """
         Изменить email пользователя, будучи авторизованными тем же пользователем,
@@ -165,6 +174,7 @@ class TestUserEdit(BaseCase):
         assert response3.content.decode("utf-8") == f"Invalid email format", \
             f"Unexpected response content {response3.content}"
 
+    @allure.title("Edit first name to invalid - negative")
     def test_edit_invalid_first_name_user(self):
         """
         Изменить firstName пользователя, будучи авторизованными тем же пользователем,
